@@ -1,6 +1,6 @@
 const React = require('react')
-
-function Def (html) {
+const { process_params } = require('express/lib/router')
+function Def (props) {
     return (
         <html>
             <head>
@@ -23,7 +23,7 @@ function Def (html) {
                     
                 </ul>
             </nav>
-                {html.children}
+                {props.children}
             </body>
         </html>
     )

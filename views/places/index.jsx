@@ -15,9 +15,9 @@ let places = [{
     pic: '/images/green.jpg'
   }]
 
-function index (data) {
-  console.log(data)
-  let placesFormatted = data.places.map((place, index) => {// places is an array of our data
+function index (props) {
+  console.log(props)
+  let placesFormatted = props.places.map((place, index) => {// places is an array of our data
     return (
       <div className="col-sm-6">
                

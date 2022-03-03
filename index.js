@@ -1,20 +1,34 @@
 // Modules and Globals
-require('dotenv').config()
 const express = require('express')
-const methodOverride = require('method-override')
-const res = require('express/lib/response')
 const app = express()
 
-// Express Settings
+// CONFIGURATION
+require('dotenv').config()
+const PORT = process.env.PORT
+
+// RENDERING ENGINE
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
+
+//STATIC
 app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }))
+
+// METHOD-OVERRIDE MIDDLEWARE
+// https://www.npmjs.com/package/method-override
+const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
+// REQUEST PARSING
+app.use(express.urlencoded({ extended: true }))
+
+const res = require('express/lib/response')
+
+//ROUTS
+
 // Controllers & Routes
-app.use('/places', require('./controllers/places'))
+const placesController = require('./controllers/places.js')
+app.use('/places', placesController)
 
 app.get('/', (req, res) => {
     res.render('home')
@@ -27,17 +41,18 @@ app.get('*', (req, res) => {
 app.get('/new', (req,res)=>{
     res.render('places/new')
 })
-app.get('/edit', (req,res)=>{//router.get('/:id/edit', (req, res) => {// router.get('/:id/edit', (req, res) => Wajih
-    res.render('places/${data.id}/edit', {place:places[id]} ) // added by wajih {place:places[id]}
+app.get('/edit', (req,res)=>{
+    res.render('places/${props.id}/edit', {place:places[id]} ) 
 
-// <a href={'/places/${data.id}/edit'} className="btn btn-warning"> Edit</a> 
+})
 app.get('/show',(req,res)=>{
     res.render('places/show',{place:places[id]})
 })
 
-})
 // Listen for Connections
-app.listen(process.env.PORT)
+app.listen(PORT, () => {
+    console.log(`Listening on port: ${PORT}`)
+})
 
 
-///
+

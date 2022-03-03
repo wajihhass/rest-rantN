@@ -1,42 +1,61 @@
 const React = require('react')
-const Def = require('../default.jsx')
+const Def = require('../default')
 
- function edit_form (data) {
+ function edit_form (props) {
     return (
 <Def>
 <main>
      <h1>Edit Place</h1>
     
-     <form method="POST" action={`/places/${data.id}?_method=PUT`}>
+     <form  action={`/places/${props.id}?_method=PUT`} method="POST">
        <div className="row">
      <div className="form-group col-sm-6">
         <label htmlFor="name">Place Name</label>
-        <input className="form-control" id="name" name="name" value = { data.place.name } required />   
+        <input
+        className="form-control" 
+        id="name"
+         name="name" 
+        value = { props.place.name } required />   
       </div>
 
       <div className="form-group col-sm-6">
 
         <label htmlFor="pic">Place Picture</label>
-        <input className="form-control" id="pic" name="pic" />
+        <input 
+        className="form-control"
+         id="pic" 
+         name="pic" />
       </div>
       </div>
       
       <div className="form-group">
         <label htmlFor="city">City</label>
-        <input className="form-control" id="city" name="city" />
+        <input 
+        className="form-control"
+         id="city"
+          name="city" />
       </div>
       
       <div className="form-group">
         <label htmlFor="state">State</label>
-        <input className="form-control" id="state" name="state" />
+        <input 
+        className="form-control" 
+        id="state" 
+        name="state" />
       </div>
 
       <div className="form-group">
           <label htmlFor="cuisines">Cuisines</label>
-          <input className="form-control" id="cuisines" name="cuisines" required />
+          <input 
+          className="form-control" 
+          id="cuisines" 
+          name="cuisines" required />
       </div>
 
-        <input className="btn btn-primary" type="submit" value="Add Place" />
+        <input 
+        className="btn btn-primary" 
+        type="submit" 
+        value="Add Place" />
     </form>
   </main>
 </Def>
@@ -44,45 +63,3 @@ const Def = require('../default.jsx')
 }  
 module.exports = edit_form
 
-/*   Worked
-function edit_form () {
-    return (
-<Def>
-<main>
-     <h1>Edit Place</h1>
-    
-     <form method="POST" action="/places">
-     <div className="form-group">
-        <label htmlFor="name">Place Name</label>
-        <input className="form-control" id="name" name="name" required />   
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="pic">Place Picture</label>
-        <input className="form-control" id="pic" name="pic" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="city">City</label>
-        <input className="form-control" id="city" name="city" />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="state">State</label>
-        <input className="form-control" id="state" name="state" />
-      </div>
-
-      <div className="form-group">
-          <label htmlFor="cuisines">Cuisines</label>
-          <input className="form-control" id="cuisines" name="cuisines" required />
-      </div>
-
-        <input className="btn btn-primary" type="submit" value="Add Place" />
-    </form>
-  </main>
-</Def>
-    )
-}  
-module.exports = edit_form
-
-*/
