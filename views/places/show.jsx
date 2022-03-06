@@ -6,7 +6,7 @@ function show (props) {
         <Def>
           <main>
                 <h2>{props.place.name}</h2>
-                <img alt={props.place.name} src={props.place.image} />
+                <img alt={props.place.name} src={props.place.pic} />
                 <a href={`/places/${props.id}/edit`}
                   className="btn btn-warning">EDIT</a> 
                        

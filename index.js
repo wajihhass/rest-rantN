@@ -6,6 +6,15 @@ const app = express()
 require('dotenv').config()
 const PORT = process.env.PORT
 
+
+// DATABASE
+
+const mongoose = require('mongoose')
+const MONGO_URI = process.env.MONGO_URI
+mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true}, () => {
+    console.log(`connected to MongoDB at: ${MONGO_URI}`)
+})
+
 // RENDERING ENGINE
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
@@ -22,11 +31,12 @@ app.use(methodOverride('_method'))
 // REQUEST PARSING
 app.use(express.urlencoded({ extended: true }))
 
-const res = require('express/lib/response')
+
 
 //ROUTS
 
 // Controllers & Routes
+//PLACES
 const placesController = require('./controllers/places.js')
 app.use('/places', placesController)
 
