@@ -81,17 +81,17 @@ router.get('/new', (req, res) => {
 // SHOW
 router.get('/:id', (req, res) => {
   const id = req.params.id
-  //const individualPlace=places[id]
+  //const individualPlace=places[id]//wajih
 
 
-// use the Bread model to query the database for the bread with this precise ID
+// use the place model to query the database for the place with this precise ID
 places.findById(id)
 .then(
     // once again, the parameter for this callback function is the /resolved/ value of the promise
-    // i.e., the bread we wanted to find
+    // i.e., the place we wanted to find
     individualPlace => {
         res.render('places/show', { 
-            places: individualPlace,
+            place: individualPlace,
             id: id
         })
     }
@@ -103,20 +103,32 @@ places.findById(id)
 })
   
 //EDIT
-  router.get('/:id/edit', (req, res) => {
+ router.get('/:id/edit', (req, res) => {
     // get current id
     // get current bread info
     // render this through a view (and pass the current info as props)
 
   const id = req.params.id
   const individualPlace=places[id]
-
+  places.findById(id)
+  .then(
+      // once again, the parameter for this callback function is the /resolved/ value of the promise
+      // i.e., the place we wanted to find
+      individualPlace => {
+          res.render('places/edit', { 
+              place: individualPlace,
+              id: id
+          })
+      }
+  ).catch(
+      err => {
+          console.log(err)
+          res.sendStatus(404)
+      })
+  })
   
-  res.render('places/edit', {
-    places: individualPlace,
-    id: id
-})
-})
+
+
  
 //UPDATE PUT
 router.put('/:id', (req, res) => {
@@ -124,15 +136,9 @@ router.put('/:id', (req, res) => {
     // get the ID
     // get the new values (and keys)
   const id = req.params.id
-  const individualPlace=places[id]
+  //const individualPlace=places[id]
 
-  if (isNaN(id)) {
-      res.render('error404')
-  }
-  else if (!places[id]) {
-      res.render('error404')
-  }
-  else {
+  
       // Dig into req.body and make sure data is valid
       if (!req.body.pic) {
           // Default image if one is not provided
@@ -145,17 +151,45 @@ router.put('/:id', (req, res) => {
           req.body.state = 'USA'
       }
 
-      // Save the new data into places[id]
-      places[id] = req.body
-      res.redirect(`/places/${id}`)
-  }
+ // if image is '', change it to `undefined` to enable the default
+    // since our form sends an empty string, the schema considers the value to exist (technically)
+    req.body.pic = req.body.pic || undefined
+// .orFail forces the method below to throw an error if the ID is not found
+    // which activates the .catch callback and sends a 404
+    // this is something you _can_ do, but it's not necessarily the best move in all situations
+    places.findByIdAndUpdate(id, req.body).orFail()
+        .then(
+            updatedPlace => {
+                console.log("updatedPlace", updatedPlace)
+                res.redirect(`/places/${id}`)
+            }
+        ).catch(
+            // see INDEX route for explanation
+            err => {
+                console.log(err)
+                res.sendStatus(404)
+            }
+        )
+          
 })
+
+
 //   DELETE
-router.delete('/places/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const id = req.params.id
-  
-  places.splice(id, 0)
-    res.status(303).redirect('/places') 
+  places.findByIdAndDelete(id)
+        .then(
+            deletedPlace=> {
+                // console.log(deletedBread)
+                res.status(303).redirect('/places')
+            }
+        ).catch(
+            // see INDEX route for explanation
+            err => {
+                console.log(err)
+                res.sendStatus(404)
+            }
+        )
 })
-  
+    
 module.exports = router

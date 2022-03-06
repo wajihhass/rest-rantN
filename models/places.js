@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
-// create a new variable, breadSchema
+// create a new variable, placeSchema
 // whose value is a new instance of the Schema class
 // built from the object provided as an argument
 
