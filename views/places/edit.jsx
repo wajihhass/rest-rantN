@@ -9,6 +9,7 @@ const Def = require('../default')
     
      <form  action={`/places/${props.id}?_method=PUT`} method="POST">
        <div className="row">
+         
      <div className="form-group col-sm-6">
         <label htmlFor="name">Place Name</label>
         <input
@@ -28,7 +29,7 @@ const Def = require('../default')
       </div>
       </div>
       
-      <div className="form-group">
+      <div className="form-group ">
         <label htmlFor="city">City</label>
         <input 
         className="form-control"
