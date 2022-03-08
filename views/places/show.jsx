@@ -5,7 +5,7 @@ function show (props) {
     return (
         <Def>
           <main>
-            <h1>Show Places Please</h1>
+            <h1>Show Places Please for Wajih</h1>
                 <h2>{props.place.name}</h2>
                 <img alt={props.place.name} src={props.place.pic} />
                 <a href={`/places/${props.id}/edit`}
