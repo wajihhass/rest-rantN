@@ -1,20 +1,6 @@
 const React = require('react')
 const Def = require('../default')
 
-/*let places = [{
-    name: 'H-Thai-ML',
-    city: 'Seattle',
-    state: 'WA',
-    cuisines: 'Thai, Pan-Asian',
-    pic: '/images/chia-fruit-drink.jpg'
-  }, {
-    name: 'Coding Cat Cafe',
-    city: 'Phoenix',
-    state: 'AZ',
-    cuisines: 'Coffee, Bakery',
-    pic: '/images/green.jpg'
-  }]*/
-
 function index (props) {
  // console.log(props)
   let placesFormatted = props.places.map((place) => {// places is an array of our data
