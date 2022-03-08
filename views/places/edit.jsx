@@ -19,6 +19,16 @@ const Def = require('../default')
         value = { props.place.name } required />   
       </div>
 
+<div className="form-group col-sm-6">
+        <label htmlFor="founded">Founded</label>
+        <input
+        className="form-control" 
+        id="founded"
+         name="founded" 
+        value = { props.place.founded } required />   
+      </div>
+
+
       <div className="form-group col-sm-6">
 
         <label htmlFor="pic">Place Picture</label>

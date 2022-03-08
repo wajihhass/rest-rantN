@@ -11,10 +11,15 @@ function new_form (props) {
         <label htmlFor="name">Place Name</label>
         <input className="form-control" id="name" name="name" required />   
       </div>
-          <div className="form-group">
-            <label for="founded">Founded Year</label>
-            <input className="form-control" id="founded" name="founded" />
-          </div>
+      <div className="form-group col-sm-4">
+            <label htmlFor="founded">Founded Year</label>
+            <input 
+              type="number" 
+              className="form-control" 
+               id="founded" 
+               name="founded" 
+              value={new Date().getFullYear()} />
+      </div>
       <div className="form-group">
         <label htmlFor="pic">Place Picture</label>
         <input className="form-control" id="pic" name="pic" />

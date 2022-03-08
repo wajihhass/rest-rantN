@@ -40,6 +40,7 @@ router.post('/', (req, res) => {
     // Default image if one is not provided
     req.body.pic = 'http://placekitten.com/400/400'
   }
+  
   if (!req.body.city) {
     req.body.city = 'Anytown'
   }
@@ -110,7 +111,7 @@ places.findById(id)
     // render this through a view (and pass the current info as props)
 
   const id = req.params.id
-  const individualPlace=places[id]
+  //const individualPlace=places[id]
   places.findById(id)
   .then(
       // once again, the parameter for this callback function is the /resolved/ value of the promise
