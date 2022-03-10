@@ -6,7 +6,6 @@ const { Schema } = mongoose
 // whose value is a new instance of the Schema class
 // built from the object provided as an argument
 
-
 const placeSchema = new Schema({
   name: { 
     type: String, required: true

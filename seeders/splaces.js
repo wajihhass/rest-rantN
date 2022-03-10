@@ -35,12 +35,3 @@ const createPlaces = async () => {
 
 createPlaces()
 
-/*
-.then(() => {
-    console.log('Success!')
-    process.exit()
-})
-.catch(err => {
-    console.log('Failure!', err)
-    process.exit()
-})*/

@@ -73,25 +73,26 @@ router.post('/', (req, res) => {
               res.sendStatus(404)
           })
 })
-
     //NEW
 router.get('/new', (req, res) => {
   // render the view containing the HTML form
     res.render('places/new')
   })
 
-// SHOW
+  // SHOW
 router.get('/:id', (req, res) => {
   const id = req.params.id
   //const individualPlace=places[id]//wajih
 
-
 // use the place model to query the database for the place with this precise ID
 places.findById(id)
+// fill in the data for the comments
+//.populate('comments')
 .then(
     // once again, the parameter for this callback function is the /resolved/ value of the promise
     // i.e., the place we wanted to find
     individualPlace => {
+       // console.log('place.comments')
         res.render('places/show', { 
             place: individualPlace,
             id: id
