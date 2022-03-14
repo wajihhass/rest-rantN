@@ -58,7 +58,12 @@ app.get('/edit', (req,res)=>{
 app.get('/show',(req,res)=>{
     res.render('places/show',{place:places[id]})
 })
+//added by wajih
+/* 
+app.get('/show',(req,res)=>{
+    res.render('places/show',{comment:comments[id]})
 
+})*/
 // Listen for Connections
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`)

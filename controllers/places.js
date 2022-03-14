@@ -1,8 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const places = require('../models/places.js')
-//const models = require('../models')
 
+const comment = express.Router()
+const models = require('../models')
+//wajih
+
+const commentModel=require('../models/comment.js')
+/*const commentSeedData = require('../seeders/seed-comments')*/
   //INDEX
 router.get('/', (req, res) => {
   // use the places model to query the DB for all breads
@@ -73,37 +78,91 @@ router.post('/', (req, res) => {
               res.sendStatus(404)
           })
 })
-    //NEW
+//create comment added by Wajih
+/*comment.get('/', (req,res)=>{
+    commentModel.find()
+    .populate('places')
+    .then(foundComments=>{res.json(foundComments)
+    })
+})
+
+comment.get('/data/seed',(req,res)=>{
+    commentModel.insertMany(commentSeedData)
+    .then(res.redirect('/places'))
+})
+
+comment.get('/:id', (req,res) => {
+    commentModel.findById(req.params.id)
+        .populate('places')
+        .then(foundComments => {
+            // res.json(foundBaker)
+            res.render('show', {
+                comment: foundComments
+            })
+        })
+})
+*/
+router.post('/:id/comment', (req, res) => {
+    console.log(req.body)
+    if (req.body.rant) {
+      req.body.rant = true
+    } 
+    else {
+      req.body.rant = false
+    }
+    places.findById(req.params.id)
+    .then(place => {
+        places.Comment.create(req.body)
+        .then(comment => {
+            place.comments.push(comment.id)
+            place.save()
+            .then(() => {
+                res.redirect(`/places/${req.params.id}`)
+            })
+        })
+        .catch(err => {
+            res.render('error404')
+        })
+    })
+    .catch(err => {
+        res.render('error404')
+    })
+    res.send('GET /places/:id/comment stub')
+})
+//ended what created by wajih
+   
+
+//NEW
 router.get('/new', (req, res) => {
   // render the view containing the HTML form
     res.render('places/new')
   })
 
   // SHOW
-router.get('/:id', (req, res) => {
-  const id = req.params.id
-  //const individualPlace=places[id]//wajih
-
-// use the place model to query the database for the place with this precise ID
-places.findById(id)
-// fill in the data for the comments
-//.populate('comments')
-.then(
-    // once again, the parameter for this callback function is the /resolved/ value of the promise
-    // i.e., the place we wanted to find
-    individualPlace => {
-       // console.log('place.comments')
-        res.render('places/show', { 
-            place: individualPlace,
-            id: id
-        })
-    }
-).catch(
-    err => {
-        console.log(err)
-        res.sendStatus(404)
-    })
-})
+  router.get('/:id', (req, res) => {
+    const id = req.params.id
+    //const individualPlace=places[id]//wajih
+  
+  // use the place model to query the database for the place with this precise ID
+  places.findById(id)
+  // fill in the data for the comments
+  .populate('comments')
+  .then(
+      // once again, the parameter for this callback function is the /resolved/ value of the promise
+      // i.e., the place we wanted to find
+      individualPlace => {
+          console.log('place.comments')
+          res.render('places/show', { 
+              place: individualPlace,
+              id: id
+          })
+      }
+  ).catch(
+      err => {
+          console.log(err)
+          res.sendStatus(404)
+      })
+  })
   
 //EDIT
  router.get('/:id/edit', (req, res) => {
@@ -196,3 +255,10 @@ router.delete('/:id', (req, res) => {
 })
     
 module.exports = router
+//module.exports = comment
+
+//module.exports = mongoose.model('Place', commentSchema)
+
+
+
+

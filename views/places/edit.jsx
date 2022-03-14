@@ -35,7 +35,8 @@ const Def = require('../default')
         <input 
         className="form-control"
          id="pic" 
-         name="pic" />
+         name="pic"
+         value ={props.place.pic} />
       </div>
       </div>
       

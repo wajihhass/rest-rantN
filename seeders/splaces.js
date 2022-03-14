@@ -1,4 +1,4 @@
-const  {Place}  = require('../models')
+const  { Place }  = require('../models')
 
 const placeData=[
     {

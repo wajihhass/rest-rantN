@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const commentModel=require('./places')
 const { Schema }=mongoose
   const commentSchema = new Schema({
     author: { 
@@ -14,8 +15,15 @@ const { Schema }=mongoose
     },
     content: { 
         type: String, 
-        default: ''
+        default: 'Ahsan'
      }
 })
   
+/*
+commentSchema.virtual('places', {
+    ref: "Place",
+    localField: "_id",
+    foreignField: "comment"
+})
+*/
 module.exports = mongoose.model('Comment', commentSchema)
