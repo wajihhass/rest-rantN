@@ -1,163 +1,117 @@
 const React = require('react')
 const Def = require('../default')
- 
-function show (props) {
-  let comments = (
-    <h3 className="inactive">
-      No comments yet!
-    </h3>
-  )
-  if (props.place.comments.length) {
-    comments = props.place.comments.map(c => {
-    return (    
-            <div className="border">
-            <h2 className="rant">{c.rant ? 'Rant! 😡' : 'Rave! 😻'}</h2>
-            <h4>{c.content}</h4>
-            <h3>
-              <stong>{c.author}</stong>
-            </h3>
-            <h4>Rating: {c.stars}</h4>
-          </div>
-          ) 
-    })
-  }
-    return (
-        <Def>
-          <main>
-            <div className="row">
-            <div className="col-sm-6">
-                <h2>{props.place.name}</h2>
-                <img src={props.place.pic} alt= {props.place.name}  />
-                <h3>
-                  Located in {props.place.city}, {props.place.state} 
-                  </h3>
-                  </div>
-                  <div className="col-sm-6">
-                <a href={`/places/${props.id}/edit`}
-                  className="btn btn-warning">EDIT</a> 
-                  <h2>  Description </h2>
-        <h3>
-          {props.place.showEstablished()}
-        </h3>
-        <h4>
-          Serving {props.place.cuisines}
-        </h4>     
-                <form action={`/places/${props.id}?_method=DELETE`} method="POST"> 
-                <button type="submit" className="btn btn-danger">DELETE</button>
-                </form>   
-                </div>
-            </div>
-            <hr />
-            <h2>Comments</h2>
-            { comments }
-            <h4>Added by Wajih </h4>
-            
- <form  action={`/comment/${props.id}?_method=PUT`} method="POST">
-       <div className="row">
-         
-     <div className="form-group col-sm-6">
-        <label htmlFor="name">Author</label>
-        <input
-        className="form-control" 
-        id="author"
-         name="author" 
-        value = { props.place.comments.author } required />   
-      </div>
 
-<div className="form-group col-sm-6">
-        <label htmlFor="content">Content</label>
-        <input
-        className="form-control" 
-        id="content"
-         name="content" 
-        value = { props.place.comments.content } required />   
-      </div>
-
-
-      <div className="form-group col-sm-6">
-
-        <label htmlFor="stars">Star Rating</label>
-        <input 
-        className="form-control"
-         id="stars" 
-         name="stars" />
-      </div>
-      </div>
-      
-      <div>
-        <label htmlFor="rant">Rant</label>
-        <input type="checkbox"
-          id="rant"
-          name="rant" />
-      </div>
-      
-        <input 
-        className="btn btn-primary"
-        type="submit" 
-        value="Add comments" />
-    </form>
-          </main>
-        </Def>
+function show (data) {
+    let comments = (
+      <h3 className="inactive">
+        No comments yet!
+      </h3>
     )
-}             
-  module.exports = show
-
-/*
-
-/*
-  //    original codes
-  
-function show (props) {
-    return (
-        <Def>
-          <main>
-          <h1>Show Places Please for Wajih</h1>
-          <div className="row">
-          <div className="col-sm-6">
-                <h2>{props.place.name}</h2>
-                <img src={props.place.pic} alt= {props.place.name}  />
-                <h3>
-                  Located in {props.place.city}, {props.place.state} 
-                  </h3>
-                  </div>
-                  <div className="col-sm-6">
-                <a href={`/places/${props.id}/edit`}
-                  className="btn btn-warning">EDIT</a> 
-                  <h2>
-          Description
-        </h2>
-        <h3>
-          {props.place.showEstablished()}
-        </h3>
-        <h4>
-          Serving {props.place.cuisines}
-        </h4>     
-                <form action={`/places/${props.id}?_method=DELETE`} method="POST"> 
-                <button type="submit" className="btn btn-danger">DELETE</button>
-                </form>   
-                </div>
-                </div>
-          </main>
-        </Def>
+    let rating = (
+      <h3 className="inactive">
+        Not yet rated
+      </h3>
     )
-}
-  module.exports = show
-
-  */
-
-  /* if (props.place.comments.length) {
-    comments = props.place.comments.map(c => {
-    return (        
-          
-          <div className="border">
+    if (data.place.comments.length) {
+      let sumRatings = data.place.comments.reduce((tot, c) => {
+        return tot + c.stars
+      }, 0)
+      let averageRating = Math.round(sumRatings / data.place.comments.length)
+      let stars = ''
+      for (let i = 0; i < averageRating; i++) {
+        stars += '⭐️'
+      }
+      rating = (
+        <h3>
+          {stars} stars
+        </h3>
+      )
+      comments = data.place.comments.map(c => {
+        return (
+          <div className="border col-sm-4">
             <h2 className="rant">{c.rant ? 'Rant! 😡' : 'Rave! 😻'}</h2>
             <h4>{c.content}</h4>
             <h3>
               <stong>- {c.author}</stong>
             </h3>
             <h4>Rating: {c.stars}</h4>
+            <form method="POST" action={`/places/${data.place.id}/comment/${c.id}?_method=DELETE`}>
+              <input type="submit" className="btn btn-danger" value="Delete Comment" />
+            </form>
           </div>
         )
       })
     }
-    */ 
+    return (
+        <Def>
+          <main>
+            <div className="row">
+              <div className="col-sm-6">
+                <img src={data.place.pic} alt={data.place.name} />
+                <h3>
+                  Located in {data.place.city}, {data.place.state}
+                </h3>
+              </div>
+              <div className="col-sm-6">
+                <h1>{ data.place.name }</h1>
+                <h2>
+                  Rating
+                </h2>
+                {rating}
+                <br />
+                <h2>
+                  Description
+                </h2>
+                <h3>
+                  {data.place.showEstablished()}
+                </h3>
+                <h4>
+                  Serving {data.place.cuisines}
+                </h4>
+                <br />
+                <a href={`/places/${data.place.id}/edit`} className="btn btn-warning">
+                  Edit
+                </a>{` `}
+                <form method="POST" action={`/places/${data.place.id}?_method=DELETE`}>
+                  <button type="submit" className="btn btn-danger">
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </div>
+            <hr />
+            <h2>Comments</h2>
+            <div className="row">
+              {comments}
+            </div>
+            <hr />
+            <h2>Got Your Own Rant or Rave?</h2>
+            <form action={`/places/${data.place.id}/comment`} method="POST">
+              <div className="row">
+                <div className="form-group col-sm-12">
+                  <label htmlFor="content">Content</label>
+                  <textarea id="content" name="content" className="form-control"></textarea>
+                </div>
+              </div>
+              <div className="row">
+                <div className="form-group col-sm-4">
+                  <label htmlFor="author">Author</label>
+                  <input id="author" name="author" className="form-control" />
+                </div>
+                <div className="form-group col-sm-4">
+                  <label htmlFor="stars">Star Rating</label>
+                  <input type="range" step="0.5" min="1" max="5" id="stars" name="stars" className="form-control" />
+                </div>
+                <div className="form-group col-sm-2">
+                  <label htmlFor="rant">Rant?</label>
+                  <input type="checkbox" id="rant" name="rant" className="form-control" />
+                </div>
+              </div>
+              <input type="submit" className="btn btn-primary" value="Add Comment" />
+            </form>
+          </main>
+        </Def>
+    )
+}
+
+module.exports = show

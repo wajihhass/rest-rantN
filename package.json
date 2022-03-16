@@ -1,21 +1,10 @@
 {
-  "dependencies": {
-    "body-parser": "^1.19.2",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "express-react-views": "^0.11.0",
-    "method-override": "^3.0.0",
-    "mongoose": "^6.2.4",
-    "node": "^17.5.0",
-    "nodemon": "^2.0.15",
-    "react": "^17.0.2"
-  },
-  "name": "rest-rant",
-  "description": "REST-Rant is an app where users can review restaurants.",
+  "name": "project-rest-rant",
   "version": "1.0.0",
   "engines": {
-    "node": "v16.14.0"
+    "node": "16.11.1"
   },
+  "description": "TBD - SUMMARY",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,13 +12,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wajihhass/Project-REST-rant.git"
+    "url": "git+https://github.com/HackerUSA-CE/project-REST-rant.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wajihhass/Project-REST-rant/issues"
+    "url": "https://github.com/HackerUSA-CE/project-REST-rant/issues"
   },
-  "homepage": "https://github.com/wajihhass/Project-REST-rant#readme"
+  "homepage": "https://github.com/HackerUSA-CE/project-REST-rant#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.3",
+    "express-react-views": "^0.11.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.12.11",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
 }
